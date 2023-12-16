@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:sportzone/app/theme/theme.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -18,6 +19,8 @@ class SportZoneApp extends StatelessWidget {
       return GetMaterialApp(
         title: "SportZone",
         debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.system,
+        theme: SportZoneAppTheme.lightTheme,
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
       );
