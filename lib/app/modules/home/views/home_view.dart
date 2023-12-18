@@ -4,101 +4,100 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:sportzone/app/routes/app_pages.dart';
-import 'package:sportzone/app/utils/gradienttext.dart';
+import 'package:sportzone/app/modules/history/views/history_view.dart';
+import 'package:sportzone/app/modules/main_menu/dashboard/views/dashboard_view.dart';
+import 'package:sportzone/app/modules/profile_menu/profile/views/profile_view.dart';
+import 'package:sportzone/app/theme/theme.dart';
 
-import '../../../theme/theme.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var pages = <Widget>[
+      const DashboardView(),
+      const HistoryView(),
+      const ProfileView(),
+    ];
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
+      body: Obx(
+        () => pages[controller.currentIndex.value],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset('assets/images/Welcome Screen.svg'),
-            SizedBox(
-              height: 6.h,
-            ),
-            gradientWidget(
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
-              Text(
-                'SportZone',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge!
-                    .copyWith(fontSize: 35.sp),
-              ),
-            ),
-            SizedBox(
-              height: 2.5.h,
-            ),
-            Text(
-              'Olahraga dengan nyaman \npesan sekarang di SportZone',
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall!
-                  .copyWith(fontSize: 17.sp),
-            ),
-            SizedBox(
-              height: 6.h,
-            ),
-            InkWell(
-              borderRadius: BorderRadius.circular(30),
-              onTap: () {
-                Get.offAllNamed(Routes.LOGIN);
-              },
-              child: Container(
-                height: 5.h,
-                width: 33.w,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Theme.of(context).colorScheme.primary,
-                          Theme.of(context).colorScheme.secondary,
-                        ])),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Mulai',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(
-                              fontSize: 18.sp,
-                              color: light,
-                            ),
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      Icon(
-                        PhosphorIconsLight.arrowRight,
-                        color: light,
-                        size: 5.w,
-                      )
-                    ],
-                  ),
-                ),
-              ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: light,
+          boxShadow: [
+            BoxShadow(
+              color: grey1,
+              blurRadius: 4,
+              offset: Offset(0, -1), // Shadow position
             ),
           ],
         ),
+        child: Padding(
+          padding: EdgeInsets.only(right: 2.w, left: 2.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              navBarItem(context, PhosphorIconsLight.house, 'Beranda', 0),
+              navBarItem(context, PhosphorIconsLight.clockCounterClockwise,
+                  'Riwayat', 1),
+              navBarItem(context, PhosphorIconsLight.user, 'Profil', 2),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  Widget navBarItem(
+    BuildContext context,
+    IconData icon,
+    String text,
+    int index,
+  ) {
+    return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          controller.changePage(index);
+        },
+        child: SizedBox(
+          height: 81,
+          child: Obx(
+            () => Padding(
+              padding: EdgeInsets.only(top: 1.4.h),
+              child: SizedBox(
+                width: 20.w,
+                child: Column(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 7.w,
+                      color: (index == controller.currentIndex.value ||
+                              Get.currentRoute == Routes.DASHBOARD)
+                          ? black
+                          : black.withOpacity(0.4),
+                    ),
+                    Text(
+                      text,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(
+                            fontSize: 10.sp,
+                            color: (index == controller.currentIndex.value ||
+                                    Get.currentRoute == Routes.DASHBOARD)
+                                ? black
+                                : black.withOpacity(0.4),
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 }

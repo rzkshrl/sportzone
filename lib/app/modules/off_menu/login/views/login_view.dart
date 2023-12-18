@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:sportzone/app/routes/app_pages.dart';
 import 'package:sportzone/app/utils/button.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/gradienttext.dart';
@@ -90,6 +91,9 @@ class LoginView extends GetView<LoginController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   btnLogin(
+                      onTap: () {
+                        Get.offAllNamed(Routes.HOME);
+                      },
                       elevation: 0,
                       btnColor: blueFB,
                       icon: SvgPicture.asset('assets/images/fb_logo.svg'),
@@ -99,6 +103,9 @@ class LoginView extends GetView<LoginController> {
                     height: 1.5.h,
                   ),
                   btnLogin(
+                      onTap: () {
+                        Get.offAllNamed(Routes.HOME);
+                      },
                       elevation: 3,
                       btnColor: light,
                       icon: SvgPicture.asset('assets/images/google_logo.svg'),
@@ -108,6 +115,9 @@ class LoginView extends GetView<LoginController> {
                     height: 1.5.h,
                   ),
                   btnLogin(
+                      onTap: () {
+                        Get.offAllNamed(Routes.HOME);
+                      },
                       elevation: 0,
                       btnColor: black,
                       icon: SvgPicture.asset('assets/images/apple_logo.svg'),

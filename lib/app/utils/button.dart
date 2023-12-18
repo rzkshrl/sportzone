@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 Widget btnLogin({
+  Function()? onTap,
+  required double elevation,
   required Color btnColor,
   required Widget icon,
   required String text,
   required Color textColor,
-  required double elevation,
 }) {
   final context = Get.context!;
   return Material(
@@ -16,7 +17,7 @@ Widget btnLogin({
     borderRadius: BorderRadius.circular(10),
     child: InkWell(
       borderRadius: BorderRadius.circular(10),
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         height: 6.h,
         width: 100.w,
