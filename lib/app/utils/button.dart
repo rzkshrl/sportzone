@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:sportzone/app/theme/theme.dart';
 
 Widget btnLogin({
   required Color btnColor,
