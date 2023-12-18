@@ -4,14 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:sportzone/app/routes/app_pages.dart';
-import 'package:sportzone/app/utils/gradienttext.dart';
 
-import '../../../theme/theme.dart';
-import '../controllers/home_controller.dart';
+import '../../../../routes/app_pages.dart';
+import '../../../../theme/theme.dart';
+import '../../../../utils/gradienttext.dart';
+import '../controllers/welcome_screen_controller.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class WelcomeScreenView extends GetView<WelcomeScreenController> {
+  const WelcomeScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

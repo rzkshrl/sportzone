@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -7,7 +8,7 @@ import 'package:sportzone/app/theme/theme.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
-  runApp(SportZoneApp());
+  runApp(const SportZoneApp());
 }
 
 class SportZoneApp extends StatelessWidget {
@@ -19,9 +20,8 @@ class SportZoneApp extends StatelessWidget {
       return GetMaterialApp(
         title: "SportZone",
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.system,
         theme: SportZoneAppTheme.lightTheme,
-        initialRoute: AppPages.INITIAL,
+        initialRoute: Routes.WELCOME_SCREEN,
         getPages: AppPages.routes,
       );
     });

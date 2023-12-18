@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +31,7 @@ Color blue8_4D63D4 = HexColor('#4D63D4');
 Color blue9_4DBCD4 = HexColor('#4DBCD4');
 Color blue10_3250ED = HexColor('#3250ED');
 Color blue11_12848B = HexColor('#12848B');
+Color blue12_CBE4FC = HexColor('#CBE4FC');
 
 Color blueBtn1 = HexColor('#3E6CE1');
 Color blueFB = HexColor('#1877F2');
@@ -67,6 +70,9 @@ class SportZoneAppTheme {
         ColorScheme.light(primary: gradientBlue_1, secondary: gradientBlue_2),
     textTheme: TextTheme(
       headlineLarge: TextStyle(fontFamily: helveticaMedium, color: light),
+      headlineMedium:
+          TextStyle(fontFamily: helveticaMediumNormal, color: light),
+      titleLarge: TextStyle(fontFamily: helveticaMedium, color: black),
       titleSmall: TextStyle(fontFamily: helveticaLight, color: blue4_809BAA),
       headlineSmall: TextStyle(fontFamily: helveticaRoman, color: black),
       displaySmall: TextStyle(fontFamily: helveticaThin, color: black),
