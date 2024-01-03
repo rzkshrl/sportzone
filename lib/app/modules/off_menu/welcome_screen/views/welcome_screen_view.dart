@@ -35,7 +35,7 @@ class WelcomeScreenView extends GetView<WelcomeScreenController> {
                 style: Theme.of(context)
                     .textTheme
                     .headlineLarge!
-                    .copyWith(fontSize: 35.sp),
+                    .copyWith(fontSize: 30.sp),
               ),
             ),
             SizedBox(
@@ -47,7 +47,7 @@ class WelcomeScreenView extends GetView<WelcomeScreenController> {
               style: Theme.of(context)
                   .textTheme
                   .titleSmall!
-                  .copyWith(fontSize: 17.sp),
+                  .copyWith(fontSize: 14.sp, height: 1.1),
             ),
             SizedBox(
               height: 6.h,
@@ -79,7 +79,7 @@ class WelcomeScreenView extends GetView<WelcomeScreenController> {
                             .textTheme
                             .headlineMedium!
                             .copyWith(
-                              fontSize: 18.sp,
+                              fontSize: 14.5.sp,
                               color: light,
                             ),
                       ),

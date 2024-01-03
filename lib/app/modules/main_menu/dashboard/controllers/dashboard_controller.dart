@@ -1,17 +1,13 @@
 // ignore_for_file: unnecessary_overrides
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 
 class DashboardController extends GetxController {
-  var scrollController = ScrollController().obs;
-  var titleFontSize = 0.sp;
+  var showTitle = false.obs;
 
-  bool get isSliverAppBarExpanded {
-    return scrollController.value.hasClients &&
-        scrollController.value.offset > (220 - kToolbarHeight);
-  }
+  // bool get isSliverAppBarExpanded {
+  //   return scrollController.hasClients &&
+  //       scrollController.offset > (220 - kToolbarHeight);
+  // }
 
   @override
   void onInit() {

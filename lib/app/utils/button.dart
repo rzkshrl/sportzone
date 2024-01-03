@@ -35,7 +35,7 @@ Widget btnLogin({
               Text(
                 text,
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                       color: textColor,
                     ),
               ),

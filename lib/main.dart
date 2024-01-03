@@ -7,6 +7,7 @@ import 'package:sportzone/app/theme/theme.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const SportZoneApp());
 }
 

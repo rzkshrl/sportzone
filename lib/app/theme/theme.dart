@@ -36,6 +36,7 @@ Color blueBtn1 = HexColor('#3E6CE1');
 Color blueFB = HexColor('#1877F2');
 
 Color grey1 = HexColor('#E9E8E8');
+Color grey2 = HexColor('#EBEBEB');
 Color green = HexColor('#3DD598');
 Color green2 = HexColor('#0C566F');
 Color red = HexColor('##FC5A5A');
@@ -72,8 +73,10 @@ class SportZoneAppTheme {
       headlineMedium:
           TextStyle(fontFamily: helveticaMediumNormal, color: light),
       titleLarge: TextStyle(fontFamily: helveticaMedium, color: black),
+      titleMedium: TextStyle(fontFamily: helveticaMediumNormal, color: black),
       titleSmall: TextStyle(fontFamily: helveticaLight, color: blue4_809BAA),
       headlineSmall: TextStyle(fontFamily: helveticaRoman, color: black),
+      displayMedium: TextStyle(fontFamily: helveticaLight, color: black),
       displaySmall: TextStyle(fontFamily: helveticaThin, color: black),
     ),
   );

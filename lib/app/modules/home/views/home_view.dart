@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -32,7 +31,7 @@ class HomeView extends GetView<HomeController> {
             BoxShadow(
               color: grey1,
               blurRadius: 4,
-              offset: Offset(0, -1), // Shadow position
+              offset: const Offset(0, -1), // Shadow position
             ),
           ],
         ),
@@ -74,7 +73,7 @@ class HomeView extends GetView<HomeController> {
                   children: [
                     Icon(
                       icon,
-                      size: 7.w,
+                      size: 8.w,
                       color: (index == controller.currentIndex.value ||
                               Get.currentRoute == Routes.DASHBOARD)
                           ? black
@@ -86,7 +85,7 @@ class HomeView extends GetView<HomeController> {
                           .textTheme
                           .headlineMedium!
                           .copyWith(
-                            fontSize: 10.sp,
+                            fontSize: 9.sp,
                             color: (index == controller.currentIndex.value ||
                                     Get.currentRoute == Routes.DASHBOARD)
                                 ? black
