@@ -14,6 +14,8 @@ class DashboardView extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DashboardController());
+
+    // add scrollcontroller to listen scroll activity for appbar
     final ScrollController scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.offset > (125 - kToolbarHeight) &&
@@ -26,7 +28,13 @@ class DashboardView extends GetView<DashboardController> {
     });
 
     return Scaffold(
-      body: GestureDetector(
+      body: NotificationListener(
+        onNotification: (notification) {
+          if (notification is ScrollUpdateNotification) {
+            controller.resetAnimationOnScroll();
+          }
+          return false;
+        },
         child: CustomScrollView(
           controller: scrollController,
           physics: const BouncingScrollPhysics(),
@@ -117,10 +125,10 @@ class DashboardView extends GetView<DashboardController> {
                                 children: [
                                   Icon(
                                     PhosphorIconsLight.mapPin,
-                                    size: 6.w,
+                                    size: 4.w,
                                   ),
                                   SizedBox(
-                                    width: 1.w,
+                                    width: 0.4.w,
                                   ),
                                   Text(
                                     'Lokasi Anda',
@@ -190,88 +198,139 @@ class DashboardView extends GetView<DashboardController> {
                               crossAxisSpacing: 0,
                               mainAxisSpacing: 0),
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              width: 2.w,
-                              height: 1.h,
-                              decoration: BoxDecoration(
-                                color: grey2,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
+                        // initiate animation and duration for animation each index
+                        if (controller.cAniDashboardCategories[index] == null) {
+                          controller.cAniDashboardCategories[index] =
+                              AnimationController(
+                            vsync: controller,
+                            duration: const Duration(milliseconds: 70),
+                          );
+                          controller.isItemClicked[index] = false;
+                        }
+                        return AnimatedBuilder(
+                          animation: controller.cAniDashboardCategories[index]!,
+                          builder: (
+                            context,
+                            child,
+                          ) {
+                            return ScaleTransition(
+                              scale: Tween(begin: 1.0, end: 0.95).animate(
+                                  controller.cAniDashboardCategories[index]!),
+                              child: child,
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onLongPressDown: (details) {
+                                controller.cAniDashboardCategories[index]!
+                                    .forward();
+                              },
+                              onLongPressEnd: (details) async {
+                                await controller.cAniDashboardCategories[index]!
+                                    .reverse();
+                              },
+                              child: InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                splashFactory: NoSplash.splashFactory,
+                                onTap: () {
+                                  controller.cAniDashboardCategories[index]!
+                                      .forward();
+                                  Future.delayed(
+                                      const Duration(milliseconds: 70), () {
+                                    controller.cAniDashboardCategories[index]!
+                                        .reverse();
+                                  });
+                                },
+                                child: Container(
+                                    width: 2.w,
+                                    height: 1.h,
+                                    decoration: BoxDecoration(
+                                      color: grey2,
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Image.asset(
-                                      'assets/images/futsal_img.png',
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 1.5.h, left: 3.w, right: 3.w),
-                                    child: Row(
+                                    child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Badminton',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium!
-                                                  .copyWith(
-                                                    fontSize: 11.sp,
-                                                    height: 1,
-                                                  ),
-                                            ),
-                                            Text(
-                                              '3 Destinasi',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium!
-                                                  .copyWith(
-                                                    fontSize: 7.sp,
-                                                    height: 1,
-                                                  ),
-                                            ),
-                                          ],
+                                        ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/futsal_img.png',
+                                          ),
                                         ),
-                                        InkWell(
-                                          onTap: () {},
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 1.5.h,
+                                              left: 3.w,
+                                              right: 3.w),
                                           child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                'Lihat Tempat',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headlineSmall!
-                                                    .copyWith(
-                                                      fontSize: 5.sp,
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Badminton',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium!
+                                                        .copyWith(
+                                                          fontSize: 11.sp,
+                                                          height: 1,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    '3 Destinasi',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .displayMedium!
+                                                        .copyWith(
+                                                          fontSize: 7.sp,
+                                                          height: 1,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              InkWell(
+                                                onTap: () {},
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      'Lihat Tempat',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineSmall!
+                                                          .copyWith(
+                                                            fontSize: 5.sp,
+                                                          ),
                                                     ),
-                                              ),
-                                              Icon(
-                                                PhosphorIconsLight.caretRight,
-                                                size: 2.w,
-                                              ),
+                                                    Icon(
+                                                      PhosphorIconsLight
+                                                          .caretRight,
+                                                      size: 2.w,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
                                         )
                                       ],
-                                    ),
-                                  )
-                                ],
-                              )),
+                                    )),
+                              ),
+                            ),
+                          ),
                         );
                       },
                     ),

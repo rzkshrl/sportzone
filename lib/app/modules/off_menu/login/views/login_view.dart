@@ -15,6 +15,7 @@ class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
@@ -86,7 +87,20 @@ class LoginView extends GetView<LoginController> {
                   children: [
                     btnLogin(
                         onTap: () {
-                          Get.offAllNamed(Routes.HOME);
+                          controller.cAniFBLogin.forward();
+                          Future.delayed(const Duration(milliseconds: 70), () {
+                            controller.cAniFBLogin.reverse();
+                          });
+                          Future.delayed(const Duration(milliseconds: 120))
+                              .then((value) {
+                            Get.offAllNamed(Routes.HOME);
+                          });
+                        },
+                        animationController: controller.cAniFBLogin,
+                        onLongPressEnd: (details) async {
+                          await controller.cAniFBLogin.forward();
+                          await controller.cAniFBLogin.reverse();
+                          await Get.offAllNamed(Routes.HOME);
                         },
                         elevation: 0,
                         btnColor: blueFB,
@@ -98,7 +112,20 @@ class LoginView extends GetView<LoginController> {
                     ),
                     btnLogin(
                         onTap: () {
-                          Get.offAllNamed(Routes.HOME);
+                          controller.cAniGoogleLogin.forward();
+                          Future.delayed(const Duration(milliseconds: 70), () {
+                            controller.cAniGoogleLogin.reverse();
+                          });
+                          Future.delayed(const Duration(milliseconds: 120))
+                              .then((value) {
+                            Get.offAllNamed(Routes.HOME);
+                          });
+                        },
+                        animationController: controller.cAniGoogleLogin,
+                        onLongPressEnd: (details) async {
+                          await controller.cAniGoogleLogin.forward();
+                          await controller.cAniGoogleLogin.reverse();
+                          await Get.offAllNamed(Routes.HOME);
                         },
                         elevation: 3,
                         btnColor: light,
@@ -110,7 +137,20 @@ class LoginView extends GetView<LoginController> {
                     ),
                     btnLogin(
                         onTap: () {
-                          Get.offAllNamed(Routes.HOME);
+                          controller.cAniAppleLogin.forward();
+                          Future.delayed(const Duration(milliseconds: 70), () {
+                            controller.cAniAppleLogin.reverse();
+                          });
+                          Future.delayed(const Duration(milliseconds: 120))
+                              .then((value) {
+                            Get.offAllNamed(Routes.HOME);
+                          });
+                        },
+                        animationController: controller.cAniAppleLogin,
+                        onLongPressEnd: (details) async {
+                          await controller.cAniAppleLogin.forward();
+                          await controller.cAniAppleLogin.reverse();
+                          await Get.offAllNamed(Routes.HOME);
                         },
                         elevation: 0,
                         btnColor: black,

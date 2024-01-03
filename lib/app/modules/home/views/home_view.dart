@@ -15,6 +15,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(HomeController());
     var pages = <Widget>[
       const DashboardView(),
       const HistoryView(),
@@ -40,10 +41,12 @@ class HomeView extends GetView<HomeController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              navBarItem(context, PhosphorIconsLight.house, 'Beranda', 0),
+              navBarItem(context, PhosphorIconsLight.house, 'Beranda', 0,
+                  controller.cAniDashboard),
               navBarItem(context, PhosphorIconsLight.clockCounterClockwise,
-                  'Riwayat', 1),
-              navBarItem(context, PhosphorIconsLight.user, 'Profil', 2),
+                  'Riwayat', 1, controller.cAniHistory),
+              navBarItem(context, PhosphorIconsLight.user, 'Profil', 2,
+                  controller.cAniProfile),
             ],
           ),
         ),
@@ -51,48 +54,67 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget navBarItem(
-    BuildContext context,
-    IconData icon,
-    String text,
-    int index,
-  ) {
+  Widget navBarItem(BuildContext context, IconData icon, String text, int index,
+      AnimationController animationController) {
+    final controller = Get.put(HomeController());
     return GestureDetector(
-        behavior: HitTestBehavior.translucent,
         onTap: () {
-          controller.changePage(index);
+          animationController.forward();
+          Future.delayed(const Duration(milliseconds: 70), () {
+            animationController.reverse();
+          });
+          Future.delayed(const Duration(milliseconds: 120)).then((value) {
+            controller.changePage(index);
+          });
         },
-        child: SizedBox(
-          height: 81,
-          child: Obx(
-            () => Padding(
-              padding: EdgeInsets.only(top: 1.4.h),
-              child: SizedBox(
-                width: 20.w,
-                child: Column(
-                  children: [
-                    Icon(
-                      icon,
-                      size: 8.w,
-                      color: (index == controller.currentIndex.value ||
-                              Get.currentRoute == Routes.DASHBOARD)
-                          ? black
-                          : black.withOpacity(0.4),
-                    ),
-                    Text(
-                      text,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(
-                            fontSize: 9.sp,
-                            color: (index == controller.currentIndex.value ||
-                                    Get.currentRoute == Routes.DASHBOARD)
-                                ? black
-                                : black.withOpacity(0.4),
-                          ),
-                    ),
-                  ],
+        onLongPressDown: (details) {
+          animationController.forward();
+        },
+        onLongPressEnd: (details) async {
+          await animationController.forward();
+          await animationController.reverse();
+          await Get.offAllNamed(Routes.HOME);
+        },
+        child: AnimatedBuilder(
+          animation: animationController,
+          builder: (context, child) {
+            return ScaleTransition(
+              scale: Tween(begin: 1.0, end: 0.90).animate(animationController),
+              child: child,
+            );
+          },
+          child: SizedBox(
+            height: 81,
+            child: Obx(
+              () => Padding(
+                padding: EdgeInsets.only(top: 1.4.h),
+                child: SizedBox(
+                  width: 20.w,
+                  child: Column(
+                    children: [
+                      Icon(
+                        icon,
+                        size: 8.w,
+                        color: (index == controller.currentIndex.value ||
+                                Get.currentRoute == Routes.DASHBOARD)
+                            ? black
+                            : black.withOpacity(0.4),
+                      ),
+                      Text(
+                        text,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                              fontSize: 9.sp,
+                              color: (index == controller.currentIndex.value ||
+                                      Get.currentRoute == Routes.DASHBOARD)
+                                  ? black
+                                  : black.withOpacity(0.4),
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
